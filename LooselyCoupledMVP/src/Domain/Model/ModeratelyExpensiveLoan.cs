@@ -2,7 +2,7 @@ namespace LooselyCoupledMVP.Domain.Model
 {
     public class ModeratelyExpensiveLoan : Loan
     {
-        public override string LoadName
+        public override string Name
         {
             get
             {
