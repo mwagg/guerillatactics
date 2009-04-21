@@ -3,4 +3,5 @@ obj
 
 *.user
 *.suo
-_Resharper*
+*.resharper
+_ReSharper*

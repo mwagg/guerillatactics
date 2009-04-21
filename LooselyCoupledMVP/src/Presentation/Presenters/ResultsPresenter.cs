@@ -12,7 +12,7 @@ namespace LooselyCoupledMVP.Presentation.Presenters
 
         public void HandleMessage(LoanSelected message)
         {
-            _view.LoanName = message.Loan.LoadName;
+            _view.LoanName = message.Loan.Name;
             _view.MonthlyPayments = message.Loan.GetMonthlyPayments(message.LoanApplication.LoanAmount,
                                                                     message.LoanApplication.Term);
         }
