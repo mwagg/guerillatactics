@@ -4,24 +4,20 @@ using LooselyCoupledMVP.Presentation.Views;
 
 namespace LooselyCoupledMVP.Presentation.Presenters
 {
-    public class ResultsPresenter : IMessageSubscriber<LoanSelected>
+    public class ResultsPresenter :IMessageSubscriber<LoanSelectedMessage>
     {
         private IResultsForm _view;
-
-        #region IMessageSubscriber<LoanSelected> Members
-
-        public void HandleMessage(LoanSelected message)
-        {
-            _view.LoanName = message.Loan.Name;
-            _view.MonthlyPayments = message.Loan.GetMonthlyPayments(message.LoanApplication.LoanAmount,
-                                                                    message.LoanApplication.Term);
-        }
-
-        #endregion
 
         public void SetView(IResultsForm view)
         {
             _view = view;
         }
+
+    	public void HandleMessage(LoanSelectedMessage message)
+    	{
+    		_view.LoanName = message.Loan.Name;
+    		_view.MonthlyPayments = message.Loan.GetMonthlyPayments(message.LoanApplication.Amount,
+    		                                                        message.LoanApplication.Term);
+    	}
     }
 }

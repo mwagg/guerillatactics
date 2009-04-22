@@ -8,60 +8,63 @@ using LooselyCoupledMVP.Presentation.Views;
 
 namespace LooselyCoupledMVP
 {
-    public class BootStrapper
-    {
-        private WindsorContainer _container;
+	public class BootStrapper
+	{
+		private WindsorContainer _container;
 
-        public void BootStrap()
-        {
-            _container = new WindsorContainer();
-            ConfigureContainer();
+		public void BootStrap()
+		{
+			_container = new WindsorContainer();
+			ConfigureContainer();
 
-            RunUI();
-        }
+			RunUI();
+		}
 
-        private void ConfigureContainer()
-        {
-            _container.Register(Component.For<IWindsorContainer>().Instance(_container));
-            _container.Register(Component.For<ApplicationController>());
+		private void ConfigureContainer()
+		{
+			_container.Register(Component.For<IWindsorContainer>().Instance(_container));
 
-            RegisterPresentationTypes();
-            RegisterEventHub();
+			RegisterCommands();
+			RegisterApplicationController();
+			RegisterEventHub();
+			RegisterPresentationTypes();
+		}
 
-            RegisterCommands();
+		private void RegisterCommands()
+		{
+			_container.Register(AllTypes.FromAssembly(GetType().Assembly)
+			                    	.BasedOn(typeof (ICommand<>))
+			                    	.WithService.FirstInterface()
+			                    	.Configure(config => config.LifeStyle.Transient));
+		}
 
-            _container.AddFacility<AutoEventHubRegistrationFacility>();
-        }
+		private void RegisterEventHub()
+		{
+			_container.Register(Component.For<IEventHub>().ImplementedBy<EventHub>());
+			_container.AddFacility<EventHubAutoRegistrationFacility>();
+		}
 
-        private void RegisterCommands()
-        {
-            _container.Register(AllTypes.FromAssembly(GetType().Assembly)
-                                    .BasedOn(typeof (ICommand<>))
-                                    .WithService.FirstInterface()
-                                    .Configure(config => config.LifeStyle.Transient));
-        }
+		private void RegisterApplicationController()
+		{
+			_container.Register(Component.For<ApplicationController>());
+		}
 
-        private void RegisterEventHub()
-        {
-            _container.Register(Component.For<IEventHub>().ImplementedBy<EventHub>());
-        }
+		private void RegisterPresentationTypes()
+		{
+			_container.Register(AllTypes.FromAssembly(GetType().Assembly)
+			                    	.BasedOn(typeof (object))
+			                    	.If(type => type.Namespace.StartsWith("LooselyCoupledMVP.Presentation"))
+			                    	.Configure(config => config.LifeStyle.Transient));
+		}
 
-        private void RegisterPresentationTypes()
-        {
-            _container.Register(AllTypes.FromAssembly(GetType().Assembly)
-                                    .BasedOn(typeof (object))
-                                    .If(type => type.Namespace.StartsWith("LooselyCoupledMVP.Presentation"))
-                                    .Configure(config => config.LifeStyle.Transient));
-        }
+		private void RunUI()
+		{
+			var dataEntryForm = _container.Resolve<DataEntryForm>();
+			var resultsForm = _container.Resolve<ResultsForm>();
 
-        private void RunUI()
-        {
-            var dataEntryForm = _container.Resolve<DataEntryForm>();
-            var resultsForm = _container.Resolve<ResultsForm>();
+			resultsForm.Show();
 
-            resultsForm.Show();
-
-            Application.Run(dataEntryForm);
-        }
-    }
+			Application.Run(dataEntryForm);
+		}
+	}
 }

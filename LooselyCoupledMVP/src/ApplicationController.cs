@@ -4,29 +4,30 @@ using LooselyCoupledMVP.Domain;
 
 namespace LooselyCoupledMVP
 {
-    public class ApplicationController
-    {
-        private readonly IEventHub _eventHub;
-        private readonly IWindsorContainer _container;
+	public class ApplicationController
+	{
+		private readonly IWindsorContainer _container;
+		private readonly IEventHub _eventHub;
 
-        public ApplicationController(IEventHub eventHub, IWindsorContainer container)
-        {
-            _eventHub = eventHub;
-            _container = container;
-        }
+		public ApplicationController(IEventHub eventHub, IWindsorContainer container)
+		{
+			_eventHub = eventHub;
+			_container = container;
+		}
 
-        public void PublishMessage<T>(T message)
-        {
-            _eventHub.Publish(message);
-        }
+		public void PublishMessage<T>(T message)
+		{
+			ExecuteCommands(message);
 
-        public void ExecuteCommand<T>(T command)
-        {
-            foreach(ICommand<T> commandInstance in _container.ResolveAll(typeof(ICommand<T>)))
-            {
-                commandInstance.Execute(command);
-            }
-            
-        }
-    }
+			_eventHub.Publish(message);
+		}
+
+		private void ExecuteCommands<T>(T message)
+		{
+			foreach (var command in _container.ResolveAll<ICommand<T>>())
+			{
+				command.Execute(message);
+			}
+		}
+	}
 }
