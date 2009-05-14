@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{4BF2C627-D1F9-4DD8-9055-2F91CED925D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spike", "Spike\Spike.csproj", "{70A00BEA-E3B0-4292-87D0-BCCDF357F45C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BF2C627-D1F9-4DD8-9055-2F91CED925D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF2C627-D1F9-4DD8-9055-2F91CED925D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF2C627-D1F9-4DD8-9055-2F91CED925D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF2C627-D1F9-4DD8-9055-2F91CED925D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70A00BEA-E3B0-4292-87D0-BCCDF357F45C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A00BEA-E3B0-4292-87D0-BCCDF357F45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A00BEA-E3B0-4292-87D0-BCCDF357F45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A00BEA-E3B0-4292-87D0-BCCDF357F45C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
