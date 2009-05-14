@@ -1,10 +1,4 @@
 @ECHO OFF
 
-pushd guerillatactics
 
-rake
-
-popd
-
-
-pause
+rake --rakefile guerillatactics/rakefile.rb

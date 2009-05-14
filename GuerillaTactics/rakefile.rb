@@ -1,6 +1,9 @@
-require '../buildsupport/msbuild.rb'
+$LOAD_PATH.push File.join(File.dirname(__FILE__), "..")
+
+require 'buildsupport/msbuild'
 
 BUILD_OUTPUT_DIR = '../build'
+SOLUTION_FILE = File.join(File.dirname(__FILE__), 'guerillatactics.sln')
 
 task :clean do
 	if File.exists?(BUILD_OUTPUT_DIR)
@@ -9,7 +12,7 @@ task :clean do
 end
 
 Rake::MSBuildTask.new(:build_guerillatactics) do |msbuild|
-	msbuild.project_file = 'guerillatactics.sln'
+	msbuild.project_file = SOLUTION_FILE
 end
 
 task :copy_to_build do
