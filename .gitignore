@@ -2,6 +2,7 @@ bin
 obj
 build
 
+TestResult.xml
 *.user
 *.suo
 *.resharper
