@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Code\ActionResults\ResultHandledByCodecResult.cs" />
     <Compile Include="Code\Filters\ResponseCanBeHandledByAttribute.cs" />
+    <Compile Include="Code\Filters\ResponseCanBeOverridenByExtensionAttribute.cs" />
     <Compile Include="Code\ResponseCodecs\HtmlResponseCodec.cs" />
     <Compile Include="Code\ResponseCodecs\IResponseCodec.cs" />
     <Compile Include="Code\ResponseCodecs\JsonResponseCodec.cs" />

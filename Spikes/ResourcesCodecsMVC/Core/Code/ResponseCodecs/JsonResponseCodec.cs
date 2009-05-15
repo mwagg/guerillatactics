@@ -7,7 +7,7 @@ namespace Core.Code.ResponseCodecs
 {
     public class JsonResponseCodec : IResponseCodec
     {
-        public bool CanExecute(string[] acceptTypes)
+        public bool CanExecute(string[] acceptTypes, RouteData routeData)
         {
             return acceptTypes.Contains("application/json");
         }

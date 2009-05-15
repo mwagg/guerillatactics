@@ -31,7 +31,8 @@ namespace Core.Code.Filters
 
             var codec = (IResponseCodec) ServiceLocator.Current.GetInstance(_codecType);
 
-            if (codec.CanExecute(filterContext.RequestContext.HttpContext.Request.AcceptTypes))
+            if (codec.CanExecute(filterContext.RequestContext.HttpContext.Request.AcceptTypes,
+                filterContext.RouteData))
             {
                 filterContext.Result = codec.Execute(filterContext.RouteData, result);
             }

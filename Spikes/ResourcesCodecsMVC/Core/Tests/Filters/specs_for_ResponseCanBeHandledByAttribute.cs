@@ -14,7 +14,7 @@ namespace specs_for_ResponseCanBeHandledByAttribute
 {
     public abstract class MyResponseCodec : IResponseCodec
     {
-        public abstract bool CanExecute(string[] acceptTypes);
+        public abstract bool CanExecute(string[] acceptTypes, RouteData routeData);
         public abstract ActionResult Execute(RouteData routeData, ResultHandledByCodecResult result);
     }
 
@@ -135,6 +135,7 @@ namespace specs_for_ResponseCanBeHandledByAttribute
                 private HttpContextBase the_http_context;
                 protected string[] the_accept_types;
                 private HttpRequestBase the_http_request;
+                protected RouteData the_route_data;
 
                 protected override void EstablishContext()
                 {
@@ -142,13 +143,14 @@ namespace specs_for_ResponseCanBeHandledByAttribute
 
                     base.EstablishContext();
 
+                    the_route_data = new RouteData();
                     the_accept_types = new[] { "text/blah" };
                     the_http_context = MockRepository.GenerateStub<HttpContextBase>();
                     the_http_request = MockRepository.GenerateStub<HttpRequestBase>();
                     the_http_request.Stub(r => r.AcceptTypes).Return(the_accept_types);
                     the_http_context.Stub(c => c.Request).Return(the_http_request);
 
-                    the_executed_context.RequestContext = new RequestContext(the_http_context, new RouteData());
+                    the_executed_context.RequestContext = new RequestContext(the_http_context, the_route_data);
 
                     the_codec = MockRepository.GenerateStub<MyResponseCodec>();
                     service_locator.Stub(sl => sl.GetInstance(typeof (MyResponseCodec))).Return(the_codec);
@@ -172,7 +174,8 @@ namespace specs_for_ResponseCanBeHandledByAttribute
                 [Test]
                 public void the_codec_should_be_asked_if_it_can_execute()
                 {
-                    the_codec.AssertWasCalled(c => c.CanExecute(the_accept_types));
+                    the_codec.AssertWasCalled(c => c.CanExecute(the_accept_types, 
+                        the_route_data));
                 }
             }
 
@@ -184,7 +187,7 @@ namespace specs_for_ResponseCanBeHandledByAttribute
                     {
                         base.EstablishContext();
 
-                        the_codec.Stub(c => c.CanExecute(the_accept_types)).Return(false);
+                        the_codec.Stub(c => c.CanExecute(the_accept_types, new RouteData())).Return(false);
                     }
                 }
 
@@ -209,15 +212,13 @@ namespace specs_for_ResponseCanBeHandledByAttribute
                 public abstract class base_context : and_the_original_result_is_a_ResourceHandledByCodecResult.base_context
                 {
                     protected ActionResult the_codecs_result;
-                    private RouteData the_route_data;
 
                     protected override void EstablishContext()
                     {
                         base.EstablishContext();
 
-                        the_route_data = new RouteData();
                         the_codecs_result = new ViewResult();
-                        the_codec.Stub(c => c.CanExecute(the_accept_types)).Return(true);
+                        the_codec.Stub(c => c.CanExecute(the_accept_types, the_route_data)).Return(true);
                         the_codec.Stub(c => c.Execute(the_route_data, 
                             (ResultHandledByCodecResult)the_executed_context.Result))
                             .Return(the_codecs_result);

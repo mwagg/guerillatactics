@@ -9,8 +9,9 @@ namespace Spike.Controllers
     [HandleError]
     public class HomeController : Controller
     {
-        [ResponseCanBeHandledBy(typeof(HtmlResponseCodec))]
-        [ResponseCanBeHandledBy(typeof(JsonResponseCodec))]
+        [ResponseCanBeOverridenByExtension("json", typeof (JsonResponseCodec), Order = 1)]
+        [ResponseCanBeHandledBy(typeof (HtmlResponseCodec))]
+        [ResponseCanBeHandledBy(typeof (JsonResponseCodec))]
         public ActionResult Index()
         {
             ViewData["Message"] = "Welcome to ASP.NET MVC!";

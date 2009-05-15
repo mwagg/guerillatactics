@@ -6,7 +6,7 @@ namespace Core.Code.ResponseCodecs
 {
     public interface IResponseCodec
     {
-        bool CanExecute(string[] acceptTypes);
+        bool CanExecute(string[] acceptTypes, RouteData routeData);
         ActionResult Execute(RouteData routeData, ResultHandledByCodecResult resultResult);
     }
 }
