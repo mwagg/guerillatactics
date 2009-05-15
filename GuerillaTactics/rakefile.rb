@@ -21,10 +21,7 @@ end
 
 Rake::NUnitTask.new(:test) do |nunit|
 	nunit.nunit_console_path = NUNIT_CONSOLE_PATH
-	
-	Dir.glob("**/bin/release/*Tests.dll").each do |test_assembly|
-		nunit.addTestAssembly(test_assembly)
-	end
+	nunit.test_assembly_pattern = '**/bin/release/*Tests.dll'
 end
 
 task :copy_to_build do
