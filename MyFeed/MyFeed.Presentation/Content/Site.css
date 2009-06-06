@@ -1,0 +1,6 @@
+﻿ul.validation-summary-errors { color: #ff0000; border: dashed 1px #ff0000; }
+.input-validation-error { border: solid 2px #ff0000; }
+
+form span { display: block; overflow: hidden; }
+form label { display: block; width: 200px; float: left; }
+input, textarea { display: block; float: left; }
