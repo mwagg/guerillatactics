@@ -69,6 +69,11 @@ namespace GuerillaTactics.Testing
         }
 
         protected abstract void When();
+
+        [TearDown]
+        public virtual void AfterEachSpec()
+        {
+        }
     }
 
     public abstract class Specification<TSubject> : Specification
