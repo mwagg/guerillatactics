@@ -39,10 +39,10 @@ namespace specs_for_UserCredentialsModelBinder
     {
         protected override void EstablishContext()
         {
-            base.EstablishContext();
-
             username = "michael";
             password = "password";
+
+            base.EstablishContext();
         }
 
         [Test]
