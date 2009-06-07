@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -14,17 +13,11 @@ using MvcContrib.Castle;
 using MyFeed.Core.Domain.Model;
 using MyFeed.Core.Domain.Queries;
 using MyFeed.Core.Domain.Services;
-using MyFeed.Core.Infrastructure.MVC;
 using MyFeed.Core.Infrastructure.MVC.Codecs;
 using MyFeed.Presentation.Models.Binders;
 
 namespace MyFeed.Presentation
 {
-    public static class Routes
-    {
-        public static readonly string HomePage = "HomePage";
-    }
-
     public class BootStrapper
     {
         public static Assembly PresentationAssembly = typeof (BootStrapper).Assembly;
@@ -38,6 +31,10 @@ namespace MyFeed.Presentation
                 Routes.HomePage,
                 "",
                 new {controller = "Home", action = "Index"});
+            routes.MapRoute(
+                Routes.Logout,
+                "logout/",
+                new {controller = "Login", action = "Logout"});
             routes.MapRoute(
                 "Default",                                              // Route name
                 "{controller}/{action}/{id}",                           // URL with parameters

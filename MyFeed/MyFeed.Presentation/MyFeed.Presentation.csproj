@@ -129,6 +129,7 @@
     <Compile Include="Models\PostNewFeedUpdateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteNames.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Views\FormView.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 using MyFeed.Core.Domain.Services;
 using MyFeed.Core.Infrastructure.MVC;
@@ -37,6 +38,11 @@ namespace MyFeed.Presentation.Controllers
             
             userCredentials.Password = string.Empty;
             return View(userCredentials);
+        }
+
+        public ActionResult Logout()
+        {
+            return RedirectToRoute(Routes.HomePage);
         }
     }
 }

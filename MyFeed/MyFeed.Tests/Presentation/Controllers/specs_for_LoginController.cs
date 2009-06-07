@@ -2,6 +2,7 @@ using System.Web.Mvc;
 using GuerillaTactics.Testing;
 using GuerillaTactics.Testing.Mvc;
 using MyFeed.Core.Domain.Services;
+using MyFeed.Presentation;
 using MyFeed.Presentation.Controllers;
 using MyFeed.Presentation.Models.Login;
 using NUnit.Framework;
@@ -154,6 +155,23 @@ namespace specs_for_LoginController
         public void the_password_should_be_cleared_so_it_is_not_sent_back_with_the_page()
         {
             the_user_credentials.Password.should_be_empty();
+        }
+    }
+
+    [TestFixture]
+    public class when_requesting_the_logout_action : base_context
+    {
+        private ActionResult result;
+
+        protected override void When()
+        {
+            result = Subject.Logout();
+        }
+
+        [Test]
+        public void the_user_should_be_redirect_to_the_home_page()
+        {
+            result.should_redirect_to_route(Routes.HomePage);
         }
     }
 }

@@ -1,5 +1,6 @@
 require 'spec'
 require 'watir'
+require 'net/http'
 
 browser = Watir::Browser.new()
 browser.bring_to_front

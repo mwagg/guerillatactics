@@ -6,6 +6,7 @@ class Pages
     
     @pages['home'] = @base_url
     @pages['login'] = @base_url + 'login/'
+    @pages['logout'] = @base_url + 'logout/'
   end
   
   def getUrlFor(page_name)
