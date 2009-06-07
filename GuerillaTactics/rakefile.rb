@@ -21,12 +21,12 @@ end
 
 Rake::NUnitTask.new(:test) do |nunit|
 	nunit.nunit_console_path = NUNIT_CONSOLE_PATH
-	nunit.test_assembly_pattern = '**/bin/release/*Tests.dll'
+	nunit.test_assembly_pattern = File.join(rakefile_dir, '**/bin/release/*Tests.dll')
 end
 
 task :copy_to_build do
 	Dir.mkdir(BUILD_OUTPUT_DIR)
-	Dir.glob("**/bin/Release/*.*").each do |file|
+	Dir.glob(File.join(rakefile_dir, "**/bin/Release/*.*")).each do |file|
 		copy(file, BUILD_OUTPUT_DIR)
 	end
 end

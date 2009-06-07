@@ -4,6 +4,11 @@ namespace GuerillaTactics.Testing.Mvc
 {
     public static class MvcAssertionExtensions
     {
+        public static void should_render_default_view_for_action(this ActionResult result)
+        {
+            result.should_render_view(string.Empty);
+        }
+
         public static void should_render_view(this ActionResult result, string viewName)
         {
             var viewResult = result.As<ViewResult>();
@@ -20,6 +25,12 @@ namespace GuerillaTactics.Testing.Mvc
         {
             var redirectResult = result.As<RedirectToRouteResult>();
             redirectResult.RouteValues["action"].should_be_equal_to(action);
+        }
+
+        public static void should_redirect_to_route(this ActionResult result, string routeName)
+        {
+            var redirectResult = result.As<RedirectToRouteResult>();
+            redirectResult.RouteName.should_be_equal_to(routeName);
         }
 
         public static void should_redirect_to_controller<TController>(this ActionResult result) where TController : IController

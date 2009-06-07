@@ -18,5 +18,40 @@ namespace GuerillaTactics.Common.Utility
         {
             return ((MemberExpression)propertyAccessor.Body).Member.Name;
         }
+
+        public static string GetPropertyName<T>(Expression<Func<T, object>> propertyAccessor)
+        {
+            return ((MemberExpression)propertyAccessor.Body).Member.Name;
+        }
+
+        public static bool IsSubClassOfRawGenericType(this Type toCheck, Type generic)
+        {
+            while (toCheck != typeof(object))
+            {
+                var current = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                if (generic == current)
+                {
+                    return true;
+                }
+                toCheck = toCheck.BaseType;
+            }
+            return false;
+        }
+
+        public static Type[] GetGenericArgumentsFromBase(this Type originalType)
+        {
+            var currentType = originalType;
+            while(originalType != typeof(object))
+            {
+                if(currentType.IsGenericType)
+                {
+                    return currentType.GetGenericArguments();
+                }
+
+                currentType = originalType.BaseType;
+            }
+
+            return new Type[]{};
+        }
     }
 }
