@@ -13,10 +13,10 @@ namespace MyFeed.Presentation.Models.Binders
         protected override UserCredentials GetModelFromBindingContext(ModelBindingContext bindingContext)
         {
             return new UserCredentials
-            {
-                Username = bindingContext.ValueProvider["Username"].AttemptedValue,
-                Password = bindingContext.ValueProvider["Password"].AttemptedValue
-            };
+                       {
+                           Username = GetAttemptedValue(bindingContext, m => m.Username),
+                           Password = GetAttemptedValue(bindingContext, m => m.Password)
+                       };
         }
     }
 }

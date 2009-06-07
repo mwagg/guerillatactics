@@ -15,8 +15,8 @@ namespace MyFeed.Presentation.Models.Binders
         {
             return new PostNewFeedUpdateModel
                        {
-                           Username = bindingContext.ValueProvider["Username"].AttemptedValue,
-                           Content = bindingContext.ValueProvider["Content"].AttemptedValue,
+                           Username = GetAttemptedValue(bindingContext, m => m.Username),
+                           Content = GetAttemptedValue(bindingContext, m => m.Content),
                            PublishedDate = SystemTime.Now()
                        };
         }
