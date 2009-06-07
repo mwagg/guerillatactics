@@ -4,17 +4,27 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Castle.Components.Validator;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using CommonServiceLocator.WindsorAdapter;
+using GuerillaTactics.Common.Utility;
 using Microsoft.Practices.ServiceLocation;
 using MvcContrib.Castle;
 using MyFeed.Core.Domain.Model;
+using MyFeed.Core.Domain.Queries;
+using MyFeed.Core.Domain.Services;
 using MyFeed.Core.Infrastructure.MVC;
 using MyFeed.Core.Infrastructure.MVC.Codecs;
+using MyFeed.Presentation.Models.Binders;
 
 namespace MyFeed.Presentation
 {
+    public static class Routes
+    {
+        public static readonly string HomePage = "HomePage";
+    }
+
     public class BootStrapper
     {
         public static Assembly PresentationAssembly = typeof (BootStrapper).Assembly;
@@ -25,10 +35,9 @@ namespace MyFeed.Presentation
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                RouteNames.ViewUsersFeed,
-                "{username}/",
-                new {controller = "Feed", action = "Index"}
-                );
+                Routes.HomePage,
+                "",
+                new {controller = "Home", action = "Index"});
             routes.MapRoute(
                 "Default",                                              // Route name
                 "{controller}/{action}/{id}",                           // URL with parameters
@@ -54,35 +63,55 @@ namespace MyFeed.Presentation
         private void ConfigureModelBinders(IWindsorContainer container)
         {
             foreach (var modelBinderType in PresentationAssembly.GetExportedTypes()
-                .Where(t => typeof(IModelBinder).IsAssignableFrom(t)))
+                .Where(t => t.IsAbstract == false && 
+                    t.IsSubClassOfRawGenericType(typeof(ModelBinderBase<>))))
             {
-                var modelTypeAttributes = modelBinderType.GetCustomAttributes(typeof (ModelBinderForAttribute), true);
-
-                if(modelTypeAttributes.Length == 0)
-                {
-                    throw new ConfigurationErrorsException(String.Format("Model binder type {0} is not decorated with {1}. The convention is to use this attribute on all model binders.",
-                        modelBinderType.Name, typeof(ModelBinderForAttribute).Name));
-                }
-
-                foreach (ModelBinderForAttribute modelTypeAttribute in modelTypeAttributes)
-                {
-                    ModelBinders.Binders.Add(modelTypeAttribute.ModelType, (IModelBinder)container.Resolve(modelBinderType));
-                }
+                Type modelType = modelBinderType.GetGenericArgumentsFromBase().Single();
+                ModelBinders.Binders.Add(modelType, (IModelBinder)container.Resolve(modelBinderType));
             }
         }
 
         private void ConfigureContainer(IWindsorContainer container)
         {
             container.RegisterWithSelf();
-            container.RegisterControllers(GetType().Assembly);
+            container.RegisterControllers(PresentationAssembly);
             container.RegisterQueries();
             container.RegisterResponseCodecs();
             container.RegisterModelBinders();
+            container.RegisterValidationRegistry();
+            container.RegisterDomainServices();
+            container.RegisterQueries();
         }
     }
 
     public static class ContainerConfigurationExtensions
     {
+        public static void RegisterQueries(this IWindsorContainer container)
+        {
+            container.Register(AllTypes
+                                   .FromAssembly(BootStrapper.CoreAssembly)
+                                   .Where(t => t.Namespace == typeof (FindUserByUsernameQuery).Namespace)
+                                   .WithService.FirstInterface()
+                                   .Configure(config => config.LifeStyle.Transient));
+        }
+
+        public static void RegisterDomainServices(this IWindsorContainer container)
+        {
+            container.Register(AllTypes
+                .FromAssembly(BootStrapper.CoreAssembly)
+                .Where(t => t.Namespace ==
+                            typeof(IUserAuthenticationService).Namespace)
+                .WithService.FirstInterface()
+                .Configure(config => config.LifeStyle.Transient));
+        }
+
+        public static void RegisterValidationRegistry(this IWindsorContainer container)
+        {
+            container.Register(Component
+                .For<IValidatorRegistry>()
+                .Instance(new CachedValidationRegistry()));
+        }
+
         public static void RegisterResponseCodecs(this IWindsorContainer container)
         {
             container.Register(AllTypes
@@ -102,14 +131,6 @@ namespace MyFeed.Presentation
         {
             container.Register(Component.For<IWindsorContainer>()
                                    .Instance(container));
-        }
-
-        public static void RegisterQueries(this IWindsorContainer container)
-        {
-            container.Register(AllTypes.FromAssembly(BootStrapper.CoreAssembly)
-                                   .Where(type => type.Namespace == "MyFeed.Core.Domain.Queries")
-                                   .WithService.FirstInterface()
-                                   .Configure(config => config.LifeStyle.Transient));
         }
     }
 }

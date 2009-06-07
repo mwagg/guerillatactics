@@ -111,6 +111,8 @@
   <ItemGroup>
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Controllers\FeedController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -118,8 +120,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Binders\PostNewFeedUpdateModelBinders.cs" />
+    <Compile Include="Models\Binders\ModelBinderBase.cs" />
+    <Compile Include="Models\Binders\PostNewFeedUpdateModelBinder.cs" />
+    <Compile Include="Models\Binders\UserCredentialsModelBinder.cs" />
+    <Compile Include="Models\Binders\ValidatingModelBinder.cs" />
     <Compile Include="Models\FeedUpdateViewModel.cs" />
+    <Compile Include="Models\Login\UserCredentials.cs" />
     <Compile Include="Models\PostNewFeedUpdateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteNames.cs" />
@@ -144,6 +150,8 @@
   <ItemGroup>
     <Content Include="Views\Feed\Index.aspx" />
     <Content Include="Views\Feed\Post.aspx" />
+    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Login\Index.aspx" />
     <Content Include="Views\Shared\Application.Master" />
     <Content Include="Views\Shared\FeedList.ascx" />
     <Content Include="Views\Shared\FeedUpdate.ascx" />

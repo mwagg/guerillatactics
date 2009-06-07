@@ -7,8 +7,8 @@ namespace MyFeed.Presentation.Models
     {
         public string Username { get; set; }
 
-        [ValidateNonEmpty("Please enter the text of your update.")]
-        [ValidateLength(0, 140, "Your update cannot be greater than 140 characters in length.")]
+        [ValidateNonEmpty("Please enter the text of your update")]
+        [ValidateLength(0, 140, "Your update cannot be greater than 140 characters in length")]
         public string Content { get; set; }
 
         public DateTime PublishedDate { get; set; }

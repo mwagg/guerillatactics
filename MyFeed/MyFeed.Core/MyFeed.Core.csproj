@@ -47,6 +47,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -65,12 +66,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Model\FeedUpdate.cs" />
+    <Compile Include="Domain\Model\User.cs" />
+    <Compile Include="Domain\Queries\FindUserByUsernameQuery.cs" />
+    <Compile Include="Domain\Queries\IFindUserByUsernameQuery.cs" />
+    <Compile Include="Domain\Services\IUserAuthenticationService.cs" />
+    <Compile Include="Domain\Services\UserAuthenticationService.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
     <Compile Include="Infrastructure\MVC\Codecs\HtmlResponseCodec.cs" />
     <Compile Include="Infrastructure\MVC\Codecs\IResponseCodec.cs" />
     <Compile Include="Infrastructure\MVC\Codecs\JsonResponseCodec.cs" />
     <Compile Include="Infrastructure\MVC\Filters\ResponseCanBeHandledByAttribute.cs" />
-    <Compile Include="Infrastructure\MVC\ModelBinderForAttribute.cs" />
     <Compile Include="Infrastructure\MVC\Results\ResourceResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

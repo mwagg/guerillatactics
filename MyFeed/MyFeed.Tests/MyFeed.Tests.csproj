@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\build\GuerillaTactics.Testing.dll</HintPath>
     </Reference>
+    <Reference Include="GuerillaTactics.Testing.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\build\GuerillaTactics.Testing.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\3rdparty\nunit\nunit.framework.dll</HintPath>
@@ -69,9 +73,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Domain\Model\specs_for_User.cs" />
+    <Compile Include="Core\Domain\Services\specs_for_UserAuthenticationService.cs" />
     <Compile Include="Presentation\Controllers\FeedUpdatesObjectMother.cs" />
     <Compile Include="Presentation\Controllers\specs_for_FeedController.cs" />
+    <Compile Include="Presentation\Controllers\specs_for_HomeController.cs" />
+    <Compile Include="Presentation\Controllers\specs_for_LoginController.cs" />
+    <Compile Include="Presentation\Models\Binders\BindingModelBaseContext.cs" />
     <Compile Include="Presentation\Models\Binders\specs_for_PostNewFeedUpdateModelBinder.cs" />
+    <Compile Include="Presentation\Models\Binders\specs_for_UserCredentialsModelBinder.cs" />
     <Compile Include="Presentation\Models\specs_for_FeedUpdateViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

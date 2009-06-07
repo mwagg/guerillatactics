@@ -1,57 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
-using System.Web.Mvc;
-using Castle.Components.Validator;
 using GuerillaTactics.Common.Utility;
 using GuerillaTactics.Testing;
 using MyFeed.Presentation.Models;
 using MyFeed.Presentation.Models.Binders;
+using MyFeed.Tests.Presentation.Models.Binders;
 using NUnit.Framework;
 
 namespace specs_for_PostNewFeedUpdateModelBinder
 {
-    public abstract class base_context : Specification<PostNewFeedUpdateModelBinders>
+    public abstract class base_context : BindingModelBaseContext<PostNewFeedUpdateModelBinder,
+        PostNewFeedUpdateModel>
     {
-        private static IValidatorRegistry validationRegistry = new CachedValidationRegistry();
-        protected ModelBindingContext binding_context;
-        protected ControllerContext controller_context;
         private DateTime system_time;
         private DisposableAction systemTimeOverride;
         protected string username;
         protected string content;
-        protected object model;
 
-        protected PostNewFeedUpdateModel TypedModel
+        protected override PostNewFeedUpdateModelBinder CreateSubject()
         {
-            get { return model as PostNewFeedUpdateModel; }
-        }
-
-        protected override PostNewFeedUpdateModelBinders CreateSubject()
-        {
-            return new PostNewFeedUpdateModelBinders(validationRegistry);
+            return new PostNewFeedUpdateModelBinder(validationRegistry);
         }
 
         protected override void EstablishContext()
         {
             base.EstablishContext();
 
-            binding_context = new ModelBindingContext();
-
             system_time = DateTime.Now;
             systemTimeOverride = new DisposableAction(() => SystemTime.Now = () => system_time,
                                                       SystemTime.ResetDelegate);
 
-            binding_context.ValueProvider = new Dictionary<string, ValueProviderResult>();
-            AddRequestValue("username", username);
-            AddRequestValue("content", content);
-        }
-
-        private void AddRequestValue(string valueKey, string value)
-        {
-            binding_context.ValueProvider.Add(valueKey, 
-                                              new ValueProviderResult(value, value, CultureInfo.CurrentCulture));
+            AddRequestValue(m => m.Username, username);
+            AddRequestValue(m => m.Content, content);
         }
 
         public override void AfterEachSpec()
@@ -59,6 +39,12 @@ namespace specs_for_PostNewFeedUpdateModelBinder
             base.AfterEachSpec();
 
             systemTimeOverride.Dispose();
+        }
+
+        [Test]
+        public void the_returned_model_should_be_a_PostNewFeedUpdateModel()
+        {
+            TypedModel.should_not_be_null();
         }
     }
 
@@ -71,17 +57,6 @@ namespace specs_for_PostNewFeedUpdateModelBinder
             content = "some content";
 
             base.EstablishContext();
-        }
-
-        protected override void When()
-        {
-            model = Subject.BindModel(controller_context, binding_context);
-        }
-
-        [Test]
-        public void the_returned_model_should_be_a_PostNewFeedUpdateModel()
-        {
-            model.should_be_instance_of_type<PostNewFeedUpdateModel>();
         }
 
         [Test]
@@ -114,17 +89,6 @@ namespace specs_for_PostNewFeedUpdateModelBinder
             base.EstablishContext();
         }
 
-        protected override void When()
-        {
-            model = Subject.BindModel(controller_context, binding_context);
-        }
-
-        [Test]
-        public void the_returned_model_should_be_a_PostNewFeedUpdateModel()
-        {
-            model.should_be_instance_of_type<PostNewFeedUpdateModel>();
-        }
-
         [Test]
         public void the_username_request_value_should_be_set_on_the_model()
         {
@@ -134,8 +98,8 @@ namespace specs_for_PostNewFeedUpdateModelBinder
         [Test]
         public void an_error_should_be_added_to_the_model_state_for_the_empty_content()
         {
-            binding_context.ModelState[TypedModel.GetPropertyName(m => m.Content)].
-                Errors[0].ErrorMessage.should_be_equal_to("Please enter the text of your update.");
+            ModelState[TypedModel.GetPropertyName(m => m.Content)].
+                Errors[0].ErrorMessage.should_be_equal_to("Please enter the text of your update");
         }
     }
 
@@ -155,17 +119,6 @@ namespace specs_for_PostNewFeedUpdateModelBinder
             base.EstablishContext();
         }
 
-        protected override void When()
-        {
-            model = Subject.BindModel(controller_context, binding_context);
-        }
-
-        [Test]
-        public void the_returned_model_should_be_a_PostNewFeedUpdateModel()
-        {
-            model.should_be_instance_of_type<PostNewFeedUpdateModel>();
-        }
-
         [Test]
         public void the_username_request_value_should_be_set_on_the_model()
         {
@@ -175,8 +128,8 @@ namespace specs_for_PostNewFeedUpdateModelBinder
         [Test]
         public void an_error_should_be_added_to_the_model_state_for_the_content_length()
         {
-            binding_context.ModelState[TypedModel.GetPropertyName(m => m.Content)].
-                Errors[0].ErrorMessage.should_be_equal_to("Your update cannot be greater than 140 characters in length.");
+            ModelState[TypedModel.GetPropertyName(m => m.Content)].
+                Errors[0].ErrorMessage.should_be_equal_to("Your update cannot be greater than 140 characters in length");
         }
     }
 }
