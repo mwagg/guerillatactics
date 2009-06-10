@@ -5,13 +5,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="Stylesheet" media="screen" href="<%= Url.Content("~/Content/site.css") %>" />
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <div>
-        <asp:ContentPlaceHolder ID="MainContent" runat="server">
-        </asp:ContentPlaceHolder>
+    <div id="header">
+        <h1>my_feed</h1>
+    </div>
+    <div id="main">
+        <div id="content">
+            <asp:ContentPlaceHolder ID="content" runat="server" />
+        </div>
+        <div id="side">
+            <asp:ContentPlaceHolder ID="side" runat="server" />
+        </div>
     </div>
 </body>
 </html>

@@ -15,11 +15,11 @@ Then /^I should be taken to the (.*) page$/ do |page_name|
 end
 
 Then /^the site should acknowledge I am logged in as (.*)$/ do |username|
-  @browser.span(:id, 'current-user-info').text.should == 'Currently logged in as ' + username
+  @browser.div(:id, 'current-user-info').spans[1].text.should == 'Currently logged in as ' + username
 end
 
-Then /^I should see the logout link$/ do
-    @browser.link(:text, 'logout').assert_exists
+Then /^I should see the (.*) link$/ do |link_text|
+    @browser.link(:text, link_text).assert_exists
   end
   
 Then /^I should see an error message (.*)$/ do |error_message|
@@ -34,7 +34,7 @@ Then /^I should see an error message (.*)$/ do |error_message|
 end
 
 Then /^the (.*) text field should be highlighted as failing validation$/ do |text_field_name|
-  puts @browser.text_field(:name, text_field_name).class_name.should == 'input-validation-error'
+  @browser.text_field(:name, text_field_name).class_name.should == 'input-validation-error'
 end
 
 Then /^the (.*) text field should be empty$/ do |text_field_name|
@@ -56,13 +56,10 @@ When /^I browse to to the logout page$/ do
 end
 
 Then /^the site should acknowledge that I am not logged in$/ do
-  @browser.span(:id, 'current-user-info').text.should == 'Not logged in'
-end
-
-Then /^I should see the login link$/ do
-  pending
+  @browser.div(:id, 'current-user-info').spans[1].text.should == 'Not logged in'
 end
 
 Given /^I am not logged in$/ do
-  pending
+  result = Net::HTTP.post_form(URI.parse(@pages.getUrlFor('logout')), {})
+  result.code.should == "302"
 end

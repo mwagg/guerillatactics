@@ -75,6 +75,7 @@
     <Compile Include="Infrastructure\MVC\Codecs\HtmlResponseCodec.cs" />
     <Compile Include="Infrastructure\MVC\Codecs\IResponseCodec.cs" />
     <Compile Include="Infrastructure\MVC\Codecs\JsonResponseCodec.cs" />
+    <Compile Include="Infrastructure\MVC\Filters\AwareOfLoggedInUserAttribute.cs" />
     <Compile Include="Infrastructure\MVC\Filters\ResponseCanBeHandledByAttribute.cs" />
     <Compile Include="Infrastructure\MVC\Results\ResourceResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

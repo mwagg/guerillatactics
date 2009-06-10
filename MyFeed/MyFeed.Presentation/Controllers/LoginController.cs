@@ -29,6 +29,7 @@ namespace MyFeed.Presentation.Controllers
                 if (_authenticationService.AuthenticateUser(userCredentials.Username,
                                                             userCredentials.Password))
                 {
+                    Session["CurrentUsername"] = userCredentials.Username;
                     return RedirectToRoute(Routes.HomePage);
                 }
 
@@ -42,6 +43,7 @@ namespace MyFeed.Presentation.Controllers
 
         public ActionResult Logout()
         {
+            Session["CurrentUsername"] = null;
             return RedirectToRoute(Routes.HomePage);
         }
     }

@@ -24,7 +24,7 @@ namespace :tests do
   
   Cucumber::Rake::Task.new(:acceptance) do |t| 
     t.cucumber_opts = "--color --no-source"
-  end 
+  end
 end
 
 task :default => [:build, "tests:unit"]

@@ -1,0 +1,43 @@
+<TemplatesExport>
+  <Template uid="d9c2d53c-d462-443f-a5b4-f98e64a6a7d3" shortcut="then" description="" text="[Test]&#xD;&#xA;public void $then$()&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="then" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="125da447-f78d-460f-a8fa-9ffe4ca8a7e9" shortcut="when" description="" text="[TestFixture]&#xD;&#xA;public class when_$when$ : $basecontext$&#xD;&#xA;{&#xD;&#xA;	protected override void When()&#xD;&#xA;	{&#xD;&#xA;		$END$&#xD;&#xA;	}&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="basecontext" expression="" initialRange="0" />
+      <Variable name="when" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="9ce3172e-b5ef-44d5-b0ce-af8d9ba86c05" shortcut="basecontext" description="" text="public abstract class $subject$_base_context : Specification&lt;$subject$&gt;&#xD;&#xA;{&#xD;&#xA;	protected override void EstablishContext()&#xD;&#xA;	{&#xD;&#xA;		&#xD;&#xA;	}&#xD;&#xA;	&#xD;&#xA;	protected override $subject$ CreateSubject()&#xD;&#xA;	{&#xD;&#xA;		return new $subject$($END$);&#xD;&#xA;	}&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="subject" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="eb6fa892-7530-4673-a469-0ad924463520" shortcut="stub" description="" text="MockRepository.GenerateStub&lt;$INTERFACE$&gt;();$END$" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="INTERFACE" expression="guessExpectedType()" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+</TemplatesExport>

@@ -133,6 +133,7 @@
     <Compile Include="Views\FormView.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Views\ViewExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
@@ -153,9 +154,11 @@
     <Content Include="Views\Feed\Post.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Login\Index.aspx" />
+    <Content Include="Views\Shared\AnonymousUserInfo.ascx" />
     <Content Include="Views\Shared\Application.Master" />
     <Content Include="Views\Shared\FeedList.ascx" />
     <Content Include="Views\Shared\FeedUpdate.ascx" />
+    <Content Include="Views\Shared\LoggedInUserInfo.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

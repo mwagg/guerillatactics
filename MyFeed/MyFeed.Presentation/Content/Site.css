@@ -1,4 +1,10 @@
-﻿ul.validation-summary-errors { color: #ff0000; border: dashed 1px #ff0000; }
+﻿* { margin: 0; padding: 0; }
+body { width: 800px; margin: 0 auto; font-size: 62.5%; background: #cdcdff; }
+
+#main { background: #ffffff; -webkit-border-radius: 5px; -moz-border-radius: 5px; }
+
+
+ul.validation-summary-errors { color: #ff0000; border: dashed 1px #ff0000; }
 .input-validation-error { border: solid 2px #ff0000; }
 
 form span { display: block; overflow: hidden; }

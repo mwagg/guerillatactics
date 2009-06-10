@@ -59,6 +59,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -75,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Core\Domain\Model\specs_for_User.cs" />
     <Compile Include="Core\Domain\Services\specs_for_UserAuthenticationService.cs" />
+    <Compile Include="Core\Infrastructure\MVC\Filters\specs_for_AwareOfLoggedInUserAttribute.cs" />
     <Compile Include="Presentation\Controllers\FeedUpdatesObjectMother.cs" />
     <Compile Include="Presentation\Controllers\specs_for_FeedController.cs" />
     <Compile Include="Presentation\Controllers\specs_for_HomeController.cs" />

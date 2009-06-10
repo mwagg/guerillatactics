@@ -1,0 +1,16 @@
+<TemplatesExport>
+  <Template uid="e5ab43b5-3b7b-4180-83eb-5655e786c6fe" shortcut="" description="specs_for" text="// ReSharper disable InconsistentNaming&#xD;&#xA;&#xD;&#xA;using NUnit.Framework;&#xD;&#xA;&#xD;&#xA;namespace $namepsace$&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="False">
+    <Context>
+      <ProjectLanguageContext language="CSharp" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="namepsace" expression="getFileNameWithoutExtension()" initialRange="-1" />
+    </Variables>
+    <CustomProperties>
+      <Property key="FileName" value="specs_for_" />
+      <Property key="Extension" value="cs" />
+      <Property key="ValidateFileName" value="True" />
+    </CustomProperties>
+  </Template>
+</TemplatesExport>

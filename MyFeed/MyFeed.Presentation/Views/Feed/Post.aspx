@@ -1,7 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="~/Views/Shared/Application.Master" Inherits="MyFeed.Presentation.Views.FormView<PostFeedUpdateRequestModel>" %>
 
 <%@ Import Namespace="MvcContrib.FluentHtml" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="content" runat="server">
     <h1>Post an update to my feed</h1>
     <% using (Html.BeginForm()) { %>
         <legend>Post a new feed update</legend>
@@ -11,6 +11,6 @@
         <%= this.SubmitButton("Post update") %>
     <% } %>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="HeadContent" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
     <title>Post an update to my feed</title>
 </asp:Content>

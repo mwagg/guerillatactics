@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using System.Web.Routing;
 using GuerillaTactics.Testing;
 using GuerillaTactics.Testing.Mvc;
 using MyFeed.Core.Domain.Services;
@@ -23,7 +24,9 @@ namespace specs_for_LoginController
 
         protected override LoginController CreateSubject()
         {
-            return new LoginController(the_authentication_service);
+            var controller = new LoginController(the_authentication_service);
+            controller.CreateStubContext(new RouteData());
+            return controller;
         }
     }
 
@@ -73,6 +76,12 @@ namespace specs_for_LoginController
         public void the_client_should_be_redirected_to_the_homepage()
         {
             result.should_redirect_to_route("HomePage");
+        }
+
+        [Test]
+        public void the_current_username_should_be_stored_in_the_session()
+        {
+            Subject.Session["CurrentUsername"].should_be_equal_to(the_user_credentials.Username);
         }
     }
 
@@ -165,6 +174,7 @@ namespace specs_for_LoginController
 
         protected override void When()
         {
+            Subject.Session["CurrentUsername"] = "michael";
             result = Subject.Logout();
         }
 
@@ -172,6 +182,12 @@ namespace specs_for_LoginController
         public void the_user_should_be_redirect_to_the_home_page()
         {
             result.should_redirect_to_route(Routes.HomePage);
+        }
+
+        [Test]
+        public void the_current_username_should_be_removed_from_the_session()
+        {
+            Subject.Session["CurrentUsername"].should_be_null();
         }
     }
 }
