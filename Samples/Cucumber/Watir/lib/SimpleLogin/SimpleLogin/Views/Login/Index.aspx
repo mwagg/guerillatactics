@@ -12,7 +12,7 @@
             <legend>Please enter your credentials</legend>
             <ol>
                 <li><label for="username">Username</label><input type="text" name="username" /></li>
-                <li><label for="password">Username</label><input type="password" name="password" /></li>
+                <li><label for="password">Password</label><input type="password" name="password" /></li>
                 <li><input type="submit" value="Login" /></li>
             </ol>
         </fieldset>
