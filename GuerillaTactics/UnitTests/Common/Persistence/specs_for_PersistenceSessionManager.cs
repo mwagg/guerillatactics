@@ -98,6 +98,29 @@ namespace specs_for_PersistenceSessionManager
             }
         }
 
+        [TestFixture]
+        public class when_the_session_manager_is_disposed : base_context
+        {
+            protected override bool RethrowExceptionsThrownDuringWhen
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            protected override void When()
+            {
+                Subject.Dispose();
+            }
+
+            [Test]
+            public void no_exceptions_should_be_thrown()
+            {
+                ExceptionThrownDuringWhen.should_be_null();
+            }
+        }
+
         namespace and_a_first_request_for_the_current_session_has_already_been_made
         {
             public abstract class base_context : given_the_session_factory_will_return_a_session_when_asked.base_context
@@ -141,6 +164,29 @@ namespace specs_for_PersistenceSessionManager
                     base.When();
 
                     Subject.CompleteCurrentSession();
+                }
+
+                [Test]
+                public void the_current_sessions_transaction_should_be_committed()
+                {
+                    the_transaction_returned_when_one_is_started_on_the_session.AssertWasCalled(t => t.Commit());
+                }
+
+                [Test]
+                public void the_current_session_should_be_closed()
+                {
+                    the_session_returned_from_the_session_factory.AssertWasCalled(s => s.Close());
+                }
+            }
+
+            [TestFixture]
+            public class when_the_session_manager_is_disposed : base_context
+            {
+                protected override void When()
+                {
+                    base.When();
+
+                    Subject.Dispose();
                 }
 
                 [Test]
@@ -230,6 +276,45 @@ namespace specs_for_PersistenceSessionManager
                     public void an_exception_should_be_thrown()
                     {
                         ExceptionThrownDuringWhen.should_be_instance_of_type(typeof(InvalidOperationException));
+                    }
+                }
+            }
+
+            namespace and_the_session_manager_has_been_disposed
+            {
+                public abstract class base_context :
+                    and_a_first_request_for_the_current_session_has_already_been_made.base_context
+                {
+                    protected override void When()
+                    {
+                        base.When();
+
+                        Subject.Dispose();
+                    }
+                }
+
+                [TestFixture]
+                public class when_an_attempt_is_made_to_complete_the_current_session_again : base_context
+                {
+                    protected override void When()
+                    {
+                        base.When();
+
+                        Subject.Dispose();
+                    }
+
+                    protected override bool RethrowExceptionsThrownDuringWhen
+                    {
+                        get
+                        {
+                            return false;
+                        }
+                    }
+
+                    [Test]
+                    public void an_exception_should_be_thrown()
+                    {
+                        ExceptionThrownDuringWhen.should_be_instance_of_type(typeof(ObjectDisposedException));
                     }
                 }
             }

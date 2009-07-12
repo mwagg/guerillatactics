@@ -3,13 +3,14 @@ using NHibernate;
 
 namespace GuerillaTactics.Common.Persistence
 {
-    public class PersistenceSessionManager
+    public class PersistenceSessionManager : IPersistenceSessionManager, IDisposable
     {
         private readonly ISessionFactory _sessionFactory;
         private ISession _currentSession;
         private ITransaction _currentTransaction;
         private bool _rollbackOnComplete;
         private bool _currentSessionIsAlreadyComplete;
+        private bool _isDisposed;
 
         public PersistenceSessionManager(ISessionFactory sessionFactory)
         {
@@ -61,6 +62,17 @@ namespace GuerillaTactics.Common.Persistence
         public void RollbackOnComplete()
         {
             _rollbackOnComplete = true;
+        }
+
+        public void Dispose()
+        {
+            if(_isDisposed)
+            {
+                throw new ObjectDisposedException(GetType().Name, "The persistence session manager is already disposed and another call to Dispose has been made.");
+            }
+
+            _isDisposed = true;
+            CompleteCurrentSession();
         }
     }
 }
