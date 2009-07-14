@@ -18,6 +18,8 @@ namespace GuerillaTactics.Common.Persistence
 
         protected override void Init()
         {
+            Kernel.Resolver.AddSubResolver(new SessionSubDependencyResolver(Kernel));
+
             Kernel
                 .Register(Component
                               .For<IPersistenceSessionManager>()
