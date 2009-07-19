@@ -1,4 +1,5 @@
-﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+﻿
+<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -14,11 +15,9 @@
     </div>
     <div id="main">
         <div id="content">
-            <asp:ContentPlaceHolder ID="content" runat="server" />
+            <asp:ContentPlaceHolder ID="mainContent" runat="server" />
         </div>
-        <div id="side">
-            <asp:ContentPlaceHolder ID="side" runat="server" />
-        </div>
+        
     </div>
 </body>
 </html>

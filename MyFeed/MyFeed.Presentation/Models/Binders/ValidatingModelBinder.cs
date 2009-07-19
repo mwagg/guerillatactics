@@ -12,37 +12,33 @@ namespace MyFeed.Presentation.Models.Binders
             _validatorRegistry = validatorRegistry;
         }
 
-        public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        protected override void OnModelUpdated(ControllerContext controllerContext, 
+            ModelBindingContext bindingContext)
         {
-            TModel model = GetModelFromBindingContext(bindingContext);
+            base.OnModelUpdated(controllerContext, bindingContext);
 
             var validationRunner = new ValidatorRunner(_validatorRegistry);
-            if (validationRunner.IsValid(model) == false)
+            if (validationRunner.IsValid(bindingContext.Model) == false)
             {
-                AddErrorsToModelState(bindingContext, validationRunner, model);
+                AddErrorsToModelState(bindingContext, validationRunner, 
+                    bindingContext.Model);
             }
-
-            return model;
         }
 
-        private void AddErrorsToModelState(ModelBindingContext bindingContext, ValidatorRunner validationRunner, 
-                                           TModel model)
+        private void AddErrorsToModelState(ModelBindingContext bindingContext, 
+            IValidatorRunner validationRunner, 
+                                           object model)
         {
             ErrorSummary errorSummary = validationRunner.GetErrorSummary(model);
 
             foreach (var invalidProperty in errorSummary.InvalidProperties)
             {
-                var modelState = new ModelState();
-
-                foreach (var errorForProperty in errorSummary.GetErrorsForProperty(invalidProperty))
+                foreach (var errorForProperty in 
+                    errorSummary.GetErrorsForProperty(invalidProperty))
                 {
-                    modelState.Errors.Add(errorForProperty);
+                    bindingContext.ModelState.AddModelError(invalidProperty, errorForProperty);
                 }
-
-                bindingContext.ModelState.Add(invalidProperty, modelState);
             }
         }
-
-        protected abstract TModel GetModelFromBindingContext(ModelBindingContext bindingContext);
     }
 }

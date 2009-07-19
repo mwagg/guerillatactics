@@ -1,37 +1,11 @@
-using System;
-using MyFeed.Core.Domain.Model;
+using Castle.Components.Validator;
 
 namespace MyFeed.Presentation.Models
 {
     public class FeedUpdateViewModel
     {
-        private readonly FeedUpdate _feedUpdate;
-
-        public FeedUpdateViewModel(FeedUpdate feedUpdate)
-        {
-            if (feedUpdate == null) throw new ArgumentNullException("feedUpdate");
-            _feedUpdate = feedUpdate;
-        }
-
-        public string Content
-        {
-            get
-            {
-                return _feedUpdate.Content;
-            }
-        }
-
-        public string Username
-        {
-            get { return _feedUpdate.Username; }
-        }
-
-        public string PublishedDate
-        {
-            get
-            {
-                return _feedUpdate.PublishDateTime.ToString("f");
-            }
-        }
+        [ValidateNonEmpty("Please enter your update.")]
+        [ValidateLength(1, 140, "Your update must be 140 characters or less")]
+        public string Content { get; set; }
     }
 }

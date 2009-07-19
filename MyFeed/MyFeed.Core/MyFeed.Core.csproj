@@ -65,20 +65,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Model\FeedUpdate.cs" />
-    <Compile Include="Domain\Model\User.cs" />
-    <Compile Include="Domain\Queries\FindUserByUsernameQuery.cs" />
-    <Compile Include="Domain\Queries\IFindUserByUsernameQuery.cs" />
-    <Compile Include="Domain\Services\IUserAuthenticationService.cs" />
-    <Compile Include="Domain\Services\UserAuthenticationService.cs" />
+    <Compile Include="Domain\Services\FakeCurrentUserDetailsProvider.cs" />
+    <Compile Include="Domain\Services\ICurrentUserDetailsProvider.cs" />
     <Compile Include="Infrastructure\HtmlExtensions.cs" />
-    <Compile Include="Infrastructure\MVC\Codecs\HtmlResponseCodec.cs" />
-    <Compile Include="Infrastructure\MVC\Codecs\IResponseCodec.cs" />
-    <Compile Include="Infrastructure\MVC\Codecs\JsonResponseCodec.cs" />
-    <Compile Include="Infrastructure\MVC\Filters\AwareOfLoggedInUserAttribute.cs" />
-    <Compile Include="Infrastructure\MVC\Filters\ResponseCanBeHandledByAttribute.cs" />
-    <Compile Include="Infrastructure\MVC\Results\ResourceResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\Model\" />
+    <Folder Include="Domain\Queries\" />
+    <Folder Include="Infrastructure\MVC\Filters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -76,17 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Domain\Model\specs_for_User.cs" />
-    <Compile Include="Core\Domain\Services\specs_for_UserAuthenticationService.cs" />
-    <Compile Include="Core\Infrastructure\MVC\Filters\specs_for_AwareOfLoggedInUserAttribute.cs" />
-    <Compile Include="Presentation\Controllers\FeedUpdatesObjectMother.cs" />
-    <Compile Include="Presentation\Controllers\specs_for_FeedController.cs" />
-    <Compile Include="Presentation\Controllers\specs_for_HomeController.cs" />
-    <Compile Include="Presentation\Controllers\specs_for_LoginController.cs" />
-    <Compile Include="Presentation\Models\Binders\BindingModelBaseContext.cs" />
-    <Compile Include="Presentation\Models\Binders\specs_for_PostNewFeedUpdateModelBinder.cs" />
-    <Compile Include="Presentation\Models\Binders\specs_for_UserCredentialsModelBinder.cs" />
-    <Compile Include="Presentation\Models\specs_for_FeedUpdateViewModel.cs" />
+    <Compile Include="Presentation\Controllers\specs_for_FeedUpdateController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +88,12 @@
       <Project>{170FB5C2-C409-4CFC-B9F3-0BAFFE8EAFB5}</Project>
       <Name>MyFeed.Presentation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Domain\Model\" />
+    <Folder Include="Core\Domain\Services\" />
+    <Folder Include="Core\Infrastructure\MVC\Filters\" />
+    <Folder Include="Presentation\Models\Binders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
