@@ -27,12 +27,9 @@
 
 #endregion
 
-using System.Reflection;
-
-namespace GuerillaTactics.Common.Utility
+namespace GuerillaTactics.Testing
 {
-    public interface IObjectFieldMappingStrategy
+    public class ObjectFieldMapperTester
     {
-        bool ShouldMapField(FieldInfo fieldInfo);
     }
 }

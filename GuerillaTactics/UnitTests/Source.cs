@@ -27,12 +27,31 @@
 
 #endregion
 
-using System.Reflection;
-
-namespace GuerillaTactics.Common.Utility
+namespace UnitTests
 {
-    public interface IObjectFieldMappingStrategy
+    public class Source : BaseSource
     {
-        bool ShouldMapField(FieldInfo fieldInfo);
+        private string _fieldWhichIsNotOnTheTarget;
+        private string _one;
+        private string _three;
+        private int _two;
+
+        public string Three
+        {
+            get { return _three; }
+            set { _three = value; }
+        }
+
+        public string One
+        {
+            get { return _one; }
+            set { _one = value; }
+        }
+
+        public int Two
+        {
+            get { return _two; }
+            set { _two = value; }
+        }
     }
 }

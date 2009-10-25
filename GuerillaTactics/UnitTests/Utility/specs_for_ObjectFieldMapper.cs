@@ -3,6 +3,7 @@ using GuerillaTactics.Common.Utility;
 using GuerillaTactics.Testing;
 using NUnit.Framework;
 using Rhino.Mocks;
+using UnitTests;
 
 namespace specs_for_ObjectFieldMapper
 {
@@ -110,101 +111,6 @@ namespace specs_for_ObjectFieldMapper
         public void fields_which_the_strategy_says_should_not_be_mapped_should_not_be_mapped()
         {
             target.One.should_be_equal_to(original_value);
-        }
-    }
-
-    public abstract class BaseSource
-    {
-        protected int _five;
-
-        public int Five
-        {
-            get { return _five; }
-            set { _five = value; }
-        }
-
-        private int _four;
-
-        public int Four
-        {
-            get { return _four; }
-            set { _four = value; }
-        }
-    }
-
-    public class Source : BaseSource
-    {
-        private string _one;
-        private int _two;
-        private string _three;
-        private string _fieldWhichIsNotOnTheTarget;
-
-        public string Three
-        {
-            get { return _three; }
-            set { _three = value; }
-        }
-
-        public string One
-        {
-            get { return _one; }
-            set { _one = value; }
-        }
-
-        public int Two
-        {
-            get {
-                return _two;
-            }
-            set {
-                _two = value;
-            }
-        }
-    }
-
-    public class Target
-    {
-        private readonly string _one;
-        private string _two;
-        private int _three;
-        private int _four;
-        private int _five;
-        private int _fieldWhichIsNotOnTheSource;
-
-        public int FieldWhichIsNotOnTheSource
-        {
-            get { return _fieldWhichIsNotOnTheSource; }
-            set { _fieldWhichIsNotOnTheSource = value; }
-        }
-
-        public int Five
-        {
-            get { return _five; }
-        }
-
-        public int Three
-        {
-            get { return _three; }
-        }
-
-        public string One
-        {
-            get { return _one; }
-        }
-
-        public string Two
-        {
-            get
-            {
-                return _two;
-            }
-        }
-
-        public int Four
-        {
-            get {
-                return _four;
-            }
         }
     }
 }
