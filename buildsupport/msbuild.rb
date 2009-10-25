@@ -17,8 +17,12 @@ module Rake
 		
 		def define
 			task name do
-				sh "msbuild #{@project_file} /p:Configuration=#{@configuration}"
+				sh "#{msbuild_path} #{@project_file} /p:Configuration=#{@configuration}"
 			end
+		end
+
+		def msbuild_path
+			"#{ENV['WINDIR']}\\Microsoft.Net\\Framework\\v3.5\\msbuild.exe"
 		end
 	end
 end
