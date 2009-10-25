@@ -1,15 +1,28 @@
+using System.Reflection;
 using GuerillaTactics.Common.Utility;   
 using GuerillaTactics.Testing;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace specs_for_ObjectFieldMapper
 {
-    [TestFixture]
-    public class in_general : Specification<ObjectFieldMaper>
+    public abstract class ObjectFieldMapperBaseContext : Specification<ObjectFieldMaper>
     {
-        private Source source;
-        private Target target;
+        protected Source source;
+        protected Target target;
 
+        protected override void EstablishContext()
+        {
+            base.EstablishContext();
+
+            source = new Source { One = "hello", Two = 5, Three = 5.ToString(), Four = 5, Five = 5 };
+            target = new Target { FieldWhichIsNotOnTheSource = 10 };
+        }
+    }
+
+    [TestFixture]
+    public class in_general : ObjectFieldMapperBaseContext
+    {
         protected override ObjectFieldMaper CreateSubject()
         {
             return new ObjectFieldMaper();
@@ -23,9 +36,6 @@ namespace specs_for_ObjectFieldMapper
         protected override void EstablishContext()
         {
             base.EstablishContext();
-
-            source = new Source {One = "hello", Two = 5, Three = 5.ToString(), Four = 5, Five = 5};
-            target = new Target {FieldWhichIsNotOnTheSource = 10};
         }
 
         [Test]
@@ -62,6 +72,44 @@ namespace specs_for_ObjectFieldMapper
         public void fields_which_are_not_on_the_source_are_not_changed()
         {
             target.FieldWhichIsNotOnTheSource.should_be_equal_to(10);
+        }
+    }
+
+    [TestFixture]
+    public class when_a_maping_strategy_is_supplied : ObjectFieldMapperBaseContext
+    {
+        private IObjectFieldMappingStrategy mapping_strategy;
+        private string original_value;
+
+        protected override void EstablishContext()
+        {
+            base.EstablishContext();
+
+            mapping_strategy = MockRepository.GenerateStub<IObjectFieldMappingStrategy>();
+            mapping_strategy.Stub(
+               strategy => strategy.ShouldMapField(Arg<FieldInfo>.Matches(field => field.Name == "_one")))
+               .Return(false);
+            mapping_strategy.Stub(
+               strategy => strategy.ShouldMapField(Arg<FieldInfo>.Matches(field => field.Name != "_one")))
+               .Return(true)
+               .Repeat.Any();
+        }
+
+        protected override ObjectFieldMaper CreateSubject()
+        {
+            return new ObjectFieldMaper(mapping_strategy);
+        }
+
+        protected override void When()
+        {
+            original_value = target.One;
+            Subject.Map(source, target);
+        }
+
+        [Test]
+        public void fields_which_the_strategy_says_should_not_be_mapped_should_not_be_mapped()
+        {
+            target.One.should_be_equal_to(original_value);
         }
     }
 

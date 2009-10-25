@@ -7,6 +7,17 @@ namespace GuerillaTactics.Common.Utility
 {
     public class ObjectFieldMaper
     {
+        private readonly IObjectFieldMappingStrategy _mappingStrategy;
+
+        public ObjectFieldMaper(IObjectFieldMappingStrategy mappingStrategy)
+        {
+            _mappingStrategy = mappingStrategy;
+        }
+
+        public ObjectFieldMaper() : this(new DefaultObjectFieldMappingStrategy())
+        {
+        }
+
         public void Map(object source, object target)
         {
             IEnumerable<FieldInfo> sourceFields = GetFieldsForType(source.GetType());
@@ -45,7 +56,9 @@ namespace GuerillaTactics.Common.Utility
                 return new FieldInfo[]{};
             }
 
-            return type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+            var allFields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+            return allFields.Where(field => _mappingStrategy.ShouldMapField(field))
                 .Union(GetFieldsForType(type.BaseType));
         }
     }

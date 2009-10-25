@@ -79,7 +79,9 @@
     <Compile Include="Persistence\SessionSubDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Persistence\PersistenceSessionManager.cs" />
+    <Compile Include="Utility\DefaultObjectFieldMappingStrategy.cs" />
     <Compile Include="Utility\DisposableAction.cs" />
+    <Compile Include="Utility\IObjectFieldMappingStrategy.cs" />
     <Compile Include="Utility\ObjectFieldMaper.cs" />
     <Compile Include="Utility\ReflectionExtensions.cs" />
     <Compile Include="Utility\SystemTime.cs" />
