@@ -84,6 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ReflectionExtensionsTests.cs" />
     <Compile Include="Utility\specs_for_DisposableAction.cs" />
+    <Compile Include="Utility\specs_for_ObjectFieldMapper.cs" />
     <Compile Include="Utility\specs_for_SystemTime.cs" />
   </ItemGroup>
   <ItemGroup>
