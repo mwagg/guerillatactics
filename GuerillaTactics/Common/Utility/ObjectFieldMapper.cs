@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -53,8 +54,7 @@ namespace GuerillaTactics.Common.Utility
             foreach (var sourceFieldInfo in sourceFields)
             {
                 object sourceValue = sourceFieldInfo.GetValue(source);
-                var targetFieldInfo = target.GetType().GetField(sourceFieldInfo.Name,
-                                                                BindingFlags.Instance | BindingFlags.NonPublic);
+                var targetFieldInfo = GetTargetField(sourceFieldInfo, target.GetType());
 
                 if (targetFieldInfo != null)
                 {
@@ -64,11 +64,11 @@ namespace GuerillaTactics.Common.Utility
                     {
                         targetValue = sourceValue;
                     }
-                    if (targetFieldInfo.FieldType == typeof (string))
+                    else if (targetFieldInfo.FieldType == typeof(string))
                     {
                         targetValue = sourceValue.ToString();
                     }
-                    if (sourceFieldInfo.FieldType == typeof (string))
+                    else
                     {
                         targetValue = Convert.ChangeType(sourceValue, targetFieldInfo.FieldType);
                     }
@@ -76,6 +76,23 @@ namespace GuerillaTactics.Common.Utility
                     targetFieldInfo.SetValue(target, targetValue);
                 }
             }
+        }
+
+        private FieldInfo GetTargetField(FieldInfo sourceFieldInfo, Type targetType)
+        {
+            if(targetType == null)
+            {
+                return null;
+            }
+
+            FieldInfo targetField =  targetType.GetField(sourceFieldInfo.Name,
+                                             BindingFlags.Instance | BindingFlags.NonPublic);
+            if(targetField == null)
+            {
+                return GetTargetField(sourceFieldInfo, targetType.BaseType);
+            }
+
+            return targetField;
         }
 
         private IEnumerable<FieldInfo> GetFieldsForType(Type type)

@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseTarget.cs" />
     <Compile Include="Common\Eventing\Specs_for_EventHub.cs" />
     <Compile Include="Common\Persistence\specs_for_PersistenceSessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

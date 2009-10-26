@@ -27,9 +27,11 @@
 
 #endregion
 
+using System.Collections.Generic;
+
 namespace UnitTests
 {
-    public class Target
+    public class Target : BaseTarget
     {
         private int _fieldWhichIsNotOnTheSource;
         private int _five;
@@ -37,6 +39,12 @@ namespace UnitTests
         private string _one;
         private int _three;
         private string _two;
+        private IList<Target> _otherTargets = new List<Target>();
+
+        public IList<Target> OtherTargets
+        {
+            get { return _otherTargets; }
+        }
 
         public int FieldWhichIsNotOnTheSource
         {

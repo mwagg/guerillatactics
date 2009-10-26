@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using GuerillaTactics.Common.Utility;   
 using GuerillaTactics.Testing;
@@ -16,8 +17,15 @@ namespace specs_for_ObjectFieldMapper
         {
             base.EstablishContext();
 
-            source = new Source { One = "hello", Two = 5, Three = 5.ToString(), Four = 5, Five = 5 };
+            source = CreateSource();
+            source.OtherSources.Add(CreateSource());
+            source.OtherSources.Add(CreateSource());
             target = new Target { FieldWhichIsNotOnTheSource = 10 };
+        }
+
+        private Source CreateSource()
+        {
+            return new Source { One = "hello", Two = 5, Three = 5.ToString(), Four = 5, Five = 5, Six = 6};
         }
     }
 
@@ -32,11 +40,6 @@ namespace specs_for_ObjectFieldMapper
         protected override void When()
         {
             Subject.Map(source, target);
-        }
-
-        protected override void EstablishContext()
-        {
-            base.EstablishContext();
         }
 
         [Test]
@@ -74,6 +77,50 @@ namespace specs_for_ObjectFieldMapper
         {
             target.FieldWhichIsNotOnTheSource.should_be_equal_to(10);
         }
+
+        [Test]
+        public void fields_are_mapped_to_the_target_hierarchy()
+        {
+            target.Six.should_be_equal_to(source.Six);
+        }
+    }
+
+    [TestFixture]
+    public class when_the_source_contains_a_field_which_is_not_a_convertible_type_on_the_target : ObjectFieldMapperBaseContext
+    {
+        protected override void When()
+        {
+            Subject.Map(new SourceWithFieldOfNonMappableTypeOnTarget(), new TargetWithFieldOfNonMappableTypeFromSource());
+        }
+
+        protected override bool RethrowExceptionsThrownDuringWhen
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        protected override ObjectFieldMapper CreateSubject()
+        {
+            return new ObjectFieldMapper();
+        }
+
+        [Test]
+        public void an_exception_should_be_thrown()
+        {
+            ExceptionThrownDuringWhen.should_be_instance_of_type<InvalidCastException>();
+        }
+    }
+
+    public class SourceWithFieldOfNonMappableTypeOnTarget
+    {
+        private int _one = 1;
+    }
+
+    public class TargetWithFieldOfNonMappableTypeFromSource
+    {
+        private TypeFilter _one;
     }
 
     [TestFixture]

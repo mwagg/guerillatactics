@@ -27,6 +27,8 @@
 
 #endregion
 
+using System.Collections.Generic;
+
 namespace UnitTests
 {
     public class Source : BaseSource
@@ -35,6 +37,14 @@ namespace UnitTests
         private string _one;
         private string _three;
         private int _two;
+        private IList<Source> _otherSources = new List<Source>();
+        private int _six;
+
+        public int Six
+        {
+            get { return _six; }
+            set { _six = value; }
+        }
 
         public string Three
         {
@@ -52,6 +62,11 @@ namespace UnitTests
         {
             get { return _two; }
             set { _two = value; }
+        }
+
+        public IList<Source> OtherSources
+        {
+            get { return _otherSources; }
         }
     }
 }
