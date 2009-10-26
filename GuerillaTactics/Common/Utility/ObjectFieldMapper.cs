@@ -34,16 +34,16 @@ using System.Reflection;
 
 namespace GuerillaTactics.Common.Utility
 {
-    public class ObjectFieldMaper
+    public class ObjectFieldMapper
     {
         private readonly IObjectFieldMappingStrategy _mappingStrategy;
 
-        public ObjectFieldMaper(IObjectFieldMappingStrategy mappingStrategy)
+        public ObjectFieldMapper(IObjectFieldMappingStrategy mappingStrategy)
         {
             _mappingStrategy = mappingStrategy;
         }
 
-        public ObjectFieldMaper() : this(new DefaultObjectFieldMappingStrategy())
+        public ObjectFieldMapper() : this(new DefaultObjectFieldMappingStrategy())
         {
         }
 

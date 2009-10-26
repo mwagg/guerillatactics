@@ -7,7 +7,7 @@ using UnitTests;
 
 namespace specs_for_ObjectFieldMapper
 {
-    public abstract class ObjectFieldMapperBaseContext : Specification<ObjectFieldMaper>
+    public abstract class ObjectFieldMapperBaseContext : Specification<ObjectFieldMapper>
     {
         protected Source source;
         protected Target target;
@@ -24,9 +24,9 @@ namespace specs_for_ObjectFieldMapper
     [TestFixture]
     public class in_general : ObjectFieldMapperBaseContext
     {
-        protected override ObjectFieldMaper CreateSubject()
+        protected override ObjectFieldMapper CreateSubject()
         {
-            return new ObjectFieldMaper();
+            return new ObjectFieldMapper();
         }
 
         protected override void When()
@@ -96,9 +96,9 @@ namespace specs_for_ObjectFieldMapper
                .Repeat.Any();
         }
 
-        protected override ObjectFieldMaper CreateSubject()
+        protected override ObjectFieldMapper CreateSubject()
         {
-            return new ObjectFieldMaper(mapping_strategy);
+            return new ObjectFieldMapper(mapping_strategy);
         }
 
         protected override void When()
