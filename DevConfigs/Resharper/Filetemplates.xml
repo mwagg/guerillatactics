@@ -1,16 +1,27 @@
 <TemplatesExport>
-  <Template uid="e5ab43b5-3b7b-4180-83eb-5655e786c6fe" shortcut="" description="specs_for" text="// ReSharper disable InconsistentNaming&#xD;&#xA;&#xD;&#xA;using NUnit.Framework;&#xD;&#xA;&#xD;&#xA;namespace $namepsace$&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="False">
-    <Context>
-      <ProjectLanguageContext language="CSharp" />
-    </Context>
+  <Template uid="87473646-49af-4b2f-b2bb-f630960ec9e2" shortcut="" description="hibernate.cfg.xml" text="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;&#xD;&#xA;&#xD;&#xA;&lt;hibernate-configuration xmlns=&quot;urn:nhibernate-configuration-2.2&quot;&gt;&#xD;&#xA;  &lt;session-factory&gt;&#xD;&#xA;    &lt;property name='proxyfactory.factory_class'&gt;NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;connection.provider&quot;&gt;NHibernate.Connection.DriverConnectionProvider&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;dialect&quot;&gt;NHibernate.Dialect.MsSql2000Dialect&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;connection.driver_class&quot;&gt;NHibernate.Driver.SqlClientDriver&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;connection.connection_string_name&quot;&gt;$connection_string_name$&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;show_sql&quot;&gt;false&lt;/property&gt;&#xD;&#xA;    &lt;property name=&quot;default_schema&quot;&gt;dbo&lt;/property&gt;&#xD;&#xA;    &lt;mapping assembly=&quot;$mapping_assembly$&quot;/&gt;&#xD;&#xA;  &lt;/session-factory&gt;&#xD;&#xA;&lt;/hibernate-configuration&gt;" reformat="True" shortenQualifiedReferences="True">
     <Categories />
     <Variables>
-      <Variable name="namepsace" expression="getFileNameWithoutExtension()" initialRange="-1" />
+      <Variable name="connection_string_name" expression="" initialRange="0" />
+      <Variable name="mapping_assembly" expression="" initialRange="0" />
     </Variables>
     <CustomProperties>
-      <Property key="FileName" value="specs_for_" />
-      <Property key="Extension" value="cs" />
-      <Property key="ValidateFileName" value="True" />
+      <Property key="FileName" value="hibernate.cfg" />
+      <Property key="Extension" value="xml" />
+      <Property key="ValidateFileName" value="False" />
+    </CustomProperties>
+  </Template>
+  <Template uid="5d484392-a73a-4635-82a1-a53281611292" shortcut="" description="NHibernate mapping file" text="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;&#xD;&#xA;&#xD;&#xA;&lt;hibernate-mapping xmlns=&quot;urn:nhibernate-mapping-2.2&quot; &#xD;&#xA;                   assembly=&quot;$assembly$&quot;&#xD;&#xA;                   namespace=&quot;$assembly$$namespace$&quot;&gt;&#xD;&#xA;  &lt;class name=&quot;$class_name$&quot; table=&quot;$class_name$s&quot;&gt;&#xD;&#xA;    &lt;id name=&quot;Id&quot; column=&quot;$class_name$Id&quot;&gt;&#xD;&#xA;      &lt;generator class=&quot;native&quot; /&gt;&#xD;&#xA;    &lt;/id&gt; &#xD;&#xA;  &lt;/class&gt;&#xD;&#xA;&lt;/hibernate-mapping&gt;" reformat="True" shortenQualifiedReferences="True">
+    <Categories />
+    <Variables>
+      <Variable name="assembly" expression="getOutputName()" initialRange="0" />
+      <Variable name="namespace" expression="" initialRange="0" />
+      <Variable name="class_name" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties>
+      <Property key="FileName" value="*.hbm" />
+      <Property key="Extension" value="xml" />
+      <Property key="ValidateFileName" value="False" />
     </CustomProperties>
   </Template>
 </TemplatesExport>
